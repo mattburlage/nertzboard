@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'nertz.apps.NertzConfig',
     'rest_framework',
     'corsheaders',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'nertzboard.wsgi.application'
+ASGI_APPLICATION = "nertzboard.routing.application"
 
 
 # Database
