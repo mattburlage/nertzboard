@@ -46,6 +46,13 @@ class HandSerializer(serializers.ModelSerializer):
         fields = ('id', 'score', 'player')
 
 
+class CreateHandSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hand
+        fields = ('nertz', 'points')
+
+
 class RoundSerializer(serializers.ModelSerializer):
     hands = HandSerializer(many=True)
 

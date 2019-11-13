@@ -6,6 +6,13 @@ class Room(models.Model):
     name = models.CharField(max_length=64)
     members = models.ManyToManyField(User, related_name='rooms')
 
+    @property
+    def curgame(self):
+        return self.games.last()
+
+    def curround(self):
+        return self.curgame.curround
+
     def __str__(self):
         return self.name
 
@@ -13,6 +20,10 @@ class Room(models.Model):
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='games')
     players = models.ManyToManyField(User, related_name='games')
+
+    @property
+    def curround(self):
+        return self.rounds.last()
 
     def __str__(self):
         return f'Game {self.pk} ({self.room.name})'

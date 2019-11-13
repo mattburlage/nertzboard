@@ -6,8 +6,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from nertz.models import Room, Game, Hand
-from .serializers import UserSerializer, UserSerializerWithToken, RoomSerializer, GameSerializer
+from nertz.models import Room, Game, Hand, Round
+from .serializers import UserSerializer, UserSerializerWithToken, RoomSerializer, GameSerializer, CreateHandSerializer
 
 
 @api_view(['GET'])
@@ -113,3 +113,79 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def check_for_new_round(game, create=True):
+    rounds = game.rounds.all()
+    hands = rounds.last().hands.all()
+
+    if len(hands) != len(game.players.all()):
+        return False
+
+    if create:
+        new_round = Round(
+            game=game,
+        )
+        new_round.save()
+        return new_round
+
+    return True
+
+
+class CreateHand(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = CreateHandSerializer(data=request.data)
+        usr = request.user
+        room = usr.rooms.first()
+        game = room.curgame
+        max_rounds = len(game.rounds.all())
+        curround = game.curround
+        usr_rounds = len(usr.hands.filter(round__game=game))
+
+        if serializer.is_valid() and usr_rounds == max_rounds - 1:
+            data = serializer.data
+            new_hand = Hand(
+                player=request.user,
+                round=curround,
+                nertz=data['nertz'],
+                points=data['points'],
+            )
+            new_hand.save()
+
+            check_for_new_round(game)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        elif serializer.is_valid() and not usr_rounds == max_rounds - 1:
+
+            if check_for_new_round(game, create=False):
+                new_round = check_for_new_round(game)
+
+                data = serializer.data
+                new_hand = Hand(
+                    player=request.user,
+                    round=new_round,
+                    nertz=data['nertz'],
+                    points=data['points'],
+                )
+                new_hand.save()
+
+                check_for_new_round(game)
+
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                error_data = {
+                    'message': 'Hand already submitted. Please wait for new round.',
+                    'usr_rounds': usr_rounds,
+                    'max_rounds': max_rounds,
+                }
+
+            return Response(error_data, status=status.HTTP_409_CONFLICT)
+        elif not serializer.is_valid():
+            check_for_new_round(game)
+
+            return Response(serializer.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
