@@ -25,7 +25,9 @@ SECRET_KEY = 'f_^7kww%)5v##bh^pa^jy6xn+i4_p-%%$yi*g_8aa=zik2fmnb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'mattburlage.pythonanywhere.com'
+]
 
 
 # Application definition
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
     'nertz.apps.NertzConfig',
     'rest_framework',
     'corsheaders',
+    'django_extensions',
     # 'channels',
 ]
 
