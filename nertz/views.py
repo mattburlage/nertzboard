@@ -55,8 +55,8 @@ def current_game_data(request):
 
         player_hands = game_hands.filter(player=player)
 
-        points = player_hands.aggregate(Sum('points'))['points__sum']
-        nertz = player_hands.aggregate(Sum('nertz'))['nertz__sum']
+        points = player_hands.aggregate(Sum('points'))['points__sum'] or 0
+        nertz = player_hands.aggregate(Sum('nertz'))['nertz__sum'] or 0
         score = points - (nertz * 2)
 
         rounds = len(player_hands)
