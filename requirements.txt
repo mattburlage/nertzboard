@@ -24,3 +24,4 @@ sqlparse==0.3.0
 Twisted==19.7.0
 txaio==18.8.1
 zope.interface==4.6.0
+django-extensions
