@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mattsmithburlage$nertzboard',
         'USER': 'mattsmithburlage',
-        'PASSWORD': 'B8GX@qXS2AY8auE',
+        'PASSWORD': 'B8GXEqXS2AY8auE',
         'HOST': 'mattsmithburlage.mysql.pythonanywhere-services.com',
     }
 }
