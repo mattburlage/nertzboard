@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'https://localhost:3000',
-    'https://nertzboard.mattburlage.com/',
+    'https://nertzboard.mattburlage.com',
 )
 
 JWT_AUTH = {
