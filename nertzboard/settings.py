@@ -26,7 +26,8 @@ SECRET_KEY = 'f_^7kww%)5v##bh^pa^jy6xn+i4_p-%%$yi*g_8aa=zik2fmnb'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'mattburlage.pythonanywhere.com'
+    'mattburlage.pythonanywhere.com',
+    'www.nertzboard.com'
 ]
 
 
