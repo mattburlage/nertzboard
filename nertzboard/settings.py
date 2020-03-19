@@ -95,10 +95,10 @@ ASGI_APPLICATION = "nertzboard.routing.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mattburlage$nertzboard2',
-        'USER': 'mattburlage',
-        'PASSWORD': 'UUMh8TNq5A8mz9K',
-        'HOST': 'mattburlage.mysql.pythonanywhere-services.com',
+        'NAME': 'mattsmithburlage$nertzboard',
+        'USER': 'mattsmithburlage',
+        'PASSWORD': 'B8GX@qXS2AY8auE',
+        'HOST': 'mattsmithburlage.mysql.pythonanywhere-services.com',
     }
 }
 
