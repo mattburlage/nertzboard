@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from nertz.models import Room, Game, Hand, Round
-from .serializers import UserSerializer, UserSerializerWithToken, RoomSerializer, GameSerializer, CreateHandSerializer
+from .serializers import UserSerializer, UserSerializerWithToken, RoomSerializer, GameSerializer, CreateHandSerializer, \
+    UserSerializerSignup
 
 
 @api_view(['GET'])
@@ -99,6 +100,19 @@ class CurrentGame(generics.ListAPIView):
         return Game.objects.filter(pk=user.rooms.first().games.last().id)
 
 
+def add_to_room(user, room_name):
+    try:
+        room = Room.objects.get(name=room_name)
+        room.games.first().players.add(user)
+    except Room.DoesNotExist:
+        room = Room.objects.create(name=room_name)
+        game = Game.objects.create(room=room)
+        game.players.add(user)
+        Round.objects.create(game=game)
+
+    room.members.add(user)
+
+
 class UserList(APIView):
     """
     Create a new user. It's called 'UserList' because normally we'd have a get
@@ -108,10 +122,16 @@ class UserList(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = UserSerializerWithToken(data=request.data)
+        room = request.data['roomName']
+        serializer = UserSerializerSignup(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+
+            add_to_room(user, room)
+
+            data_serializer = UserSerializerWithToken(user)
+
+            return Response(data_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -189,3 +209,23 @@ class CreateHand(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def new_game(request):
+    if not request.user.is_authenticated:
+        return Response({'message': 'no'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    try:
+        create_new_game(request.user)
+    except:
+        return Response({'message': 'no'}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({'message': 'ok'}, status=status.HTTP_200_OK)
+
+
+def create_new_game(user):
+    room = user.rooms.first()
+    game = Game.objects.create(room=room)
+    for uzr in room.members.all():
+        game.players.add(uzr)
+    Round.objects.create(game=game)

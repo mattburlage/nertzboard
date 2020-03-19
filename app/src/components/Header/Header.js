@@ -23,6 +23,7 @@ export default class Header extends React.Component {
         };
         this.toggleDarkMode = this.toggleDarkMode.bind(this);
         this.handle_logout = this.handle_logout.bind(this);
+        this.newGame = this.newGame.bind(this);
     }
     toggle() {
         this.setState({
@@ -43,6 +44,20 @@ export default class Header extends React.Component {
             isOpen: false,
         });
         this.props.handle_logout()
+    }
+
+    newGame () {
+        fetch(apiUrl + "/nertz/new-game", {
+            headers: {
+                Authorization: `JWT ${localStorage.getItem('token')}`
+            }
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.message === 'ok') {
+                    this.props.refreshData()
+                }
+            })
     }
 
     render() {
@@ -85,18 +100,18 @@ export default class Header extends React.Component {
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav navbar>
-                            <NavItem>
-                                <NavLink href="/">Current Game</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/">Statistics</NavLink>
-                            </NavItem>
+                            {/*<NavItem>*/}
+                            {/*    <NavLink href="/">Current Game</NavLink>*/}
+                            {/*</NavItem>*/}
+                            {/*<NavItem>*/}
+                            {/*    <NavLink href="/">Statistics</NavLink>*/}
+                            {/*</NavItem>*/}
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
                                     Options
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem>
+                                    <DropdownItem onClick={this.newGame}>
                                         New Game
                                     </DropdownItem>
                                     {/*<DropdownItem>*/}

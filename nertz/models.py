@@ -4,7 +4,7 @@ from django.db import models
 
 class Room(models.Model):
     name = models.CharField(max_length=64)
-    members = models.ManyToManyField(User, related_name='rooms')
+    members = models.ManyToManyField(User, related_name='rooms', blank=True)
 
     @property
     def curgame(self):
@@ -19,7 +19,7 @@ class Room(models.Model):
 
 class Game(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='games')
-    players = models.ManyToManyField(User, related_name='games')
+    players = models.ManyToManyField(User, related_name='games', blank=True)
 
     @property
     def curround(self):

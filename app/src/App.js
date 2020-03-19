@@ -27,6 +27,7 @@ class App extends React.Component {
         this.handleDarkModeToggle = this.handleDarkModeToggle.bind(this);
         this.handle_login = this.handle_login.bind(this);
         this.handle_signup = this.handle_signup.bind(this);
+        this.refreshData = this.refreshData.bind(this);
     }
 
     componentDidMount() {
@@ -115,12 +116,13 @@ class App extends React.Component {
         })
             .then(res => res.json())
             .then(json => {
-                localStorage.setItem('token', json.token);
-                this.setState({
-                    has_key: !!localStorage.getItem('token'),
-                    displayed_form: '',
-                    username: json.username
-                });
+                console.log(json)
+                // localStorage.setItem('token', json.token);
+                // this.setState({
+                //     has_key: !!localStorage.getItem('token'),
+                //     displayed_form: '',
+                //     username: json.username,
+                // });
             });
     };
 
@@ -156,12 +158,20 @@ class App extends React.Component {
         )
     }
 
+    refreshData () {
+        this.setState({
+            isLoaded: false,
+        });
+        this.componentDidMount();
+    }
+
     render() {
         if (!this.state.isLoaded) return this.loading();
 
         let defaultRoute = (props) => <Gameboard darkMode={this.state.darkMode} {...props} isAuthed={true} />;
         if (!this.state.has_key || !this.state.username) {
             defaultRoute = (props) => <LoginForm handleLogin={this.handle_login}
+                                                 handleSignup={this.handle_signup}
                                                  loginError={this.state.loginError}
                                                  {...props} isAuthed={true} />
         }
@@ -177,6 +187,7 @@ class App extends React.Component {
                         darkMode={this.state.darkMode}
                         toggleDarkMode={this.handleDarkModeToggle}
                         handle_logout={this.handle_logout}
+                        refreshData={this.refreshData}
                 />
                 <BrowserRouter >
                     <Switch>

@@ -25,7 +25,7 @@ class GameTable extends Component {
             let newJsx = (
                 <tr key={i} className={ behindInRounds ? 'bg-warning color-black' : ''}>
                     <td>{i+1}</td>
-                    <td>{rounds[i].name.split(' ')[0]}</td>
+                    <td>{rounds[i].name !== '' ? rounds[i].name.split(' ')[0] : rounds[i].username}</td>
                     <td>{rounds[i].score}</td>
                 </tr>
             );
@@ -49,7 +49,7 @@ class GameTable extends Component {
                 <Row className='mt-3'>
                     <Col className={'d-none d-md-block'}/>
                     <Col xs={12} md={6}>
-                        <div className={'mb-3'}>
+                        <div className={'mb-3 small'}>
                             <Link to={'#'} onClick={this.props.toggleAutoRefresh}>
                                 Turn {this.props.autoRefresh ? 'Off' : 'On'} Auto-Refresh
                             </Link>

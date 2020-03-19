@@ -10,23 +10,22 @@ import InputGroup from "reactstrap/es/InputGroup";
 import InputGroupAddon from "reactstrap/es/InputGroupAddon";
 import InputGroupText from "reactstrap/es/InputGroupText";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
+import {faDoorOpen, faKey, faSignature, faUser} from '@fortawesome/free-solid-svg-icons'
 import Input from "reactstrap/es/Input";
 import Button from "reactstrap/es/Button";
 import {Link} from "react-router-dom";
-import Registration from "../Registration/Registration";
 
-class LoginForm extends Component {
+class Registration extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             password: '',
-            registration: false,
+            roomName: '',
+            first_name: '',
         };
         this.handle_change = this.handle_change.bind(this);
-        this.toggleRegister = this.toggleRegister.bind(this);
-        this.handle_signup = this.handle_signup.bind(this);
+        this.show_registration = this.show_registration.bind(this);
     }
 
     handle_change = e => {
@@ -39,43 +38,26 @@ class LoginForm extends Component {
         });
     };
 
-    toggleRegister () {
-        this.setState({
-            registration: !this.state.registration
-        })
-    }
-
-    handle_signup (e, data) {
+    show_registration (e, data) {
         e.preventDefault();
+        console.log('e', e);
         console.log('data', data);
         console.log('data string', JSON.stringify(data));
-        this.props.handleSignup(e, data);
-        this.setState({
-            username: data['username'],
-            registration: false,
-        })
     }
 
     render() {
-        if (this.state.registration) {
-            return (
-                <Registration
-                    toggleRegister={this.toggleRegister}
-                    handleSignup={this.handle_signup}
-                />
-            )
-        }
 
-        console.log('login page');
+        console.log('registration page');
         return (
             <div className="app flex-row align-items-center">
                 <Container>
-                    <Form onSubmit={e => this.props.handleLogin(e, this.state)}>
+                    <Form onSubmit={e => this.props.handleSignup(e, this.state)}>
+                    {/*<Form onSubmit={e => this.show_registration(e, this.state)}>*/}
                         <Row className="justify-content-center mt-5">
                             <Col md="4">
-                                <h1>Login</h1>
+                                <h1>Register</h1>
                                 <p className="text-muted">
-                                    {!!this.props.loginError ? this.props.loginError : 'Sign In to your account'}
+                                    {!!this.props.loginError ? this.props.loginError : 'Create a new account'}
                                 </p>
                                 <InputGroup className="mb-3">
                                     <InputGroupAddon addonType="prepend">
@@ -107,15 +89,42 @@ class LoginForm extends Component {
                                            onChange={this.handle_change}
                                     />
                                 </InputGroup>
+                                <InputGroup className="mb-4">
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            <FontAwesomeIcon icon={faDoorOpen} />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input name='roomName'
+                                           type="text"
+                                           required
+                                           placeholder="Room Name"
+                                           value={this.state.roomName}
+                                           onChange={this.handle_change}
+                                    />
+                                </InputGroup>
+                                <InputGroup className="mb-4">
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            <FontAwesomeIcon icon={faSignature} />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input name='first_name'
+                                           type="text"
+                                           placeholder="First Name (optional)"
+                                           value={this.state.first_name}
+                                           onChange={this.handle_change}
+                                    />
+                                </InputGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs="12" className='text-center'>
-                                <Button color="primary" className="px-4 mr-2">Login</Button>
+                                <Button color="primary" className="px-4 mr-2">Register</Button>
                             </Col>
                             <Col xs="12" className="text-center mt-3">
-                                <Link to="#" onClick={this.toggleRegister}>
-                                    <Button color="link" tabIndex={-1}>Register Now!</Button>
+                                <Link to="#" onClick={this.props.toggleRegister}>
+                                    <Button color="link" tabIndex={-1}>Log In</Button>
                                 </Link>
                                 {/*<Button color="link" className="px-0">Forgot password?</Button>*/}
                             </Col>
@@ -127,4 +136,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default Registration;
