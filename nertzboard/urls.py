@@ -21,4 +21,5 @@ urlpatterns = [
     path('hotjambalaya/', admin.site.urls),
     path('token-auth/', obtain_jwt_token),
     path('nertz/', include('nertz.urls')),
+    path('', include('router.urls')),
 ]
