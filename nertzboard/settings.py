@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'mattburlage.pythonanywhere.com'
     'nertzboard.com',
     'nertzboard.msb.dev',
+    'www.nertzboard.com'
 ]
 
 
@@ -96,10 +97,10 @@ ASGI_APPLICATION = "nertzboard.routing.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mattburlage$nertzboard2',
-        'USER': 'mattburlage',
-        'PASSWORD': 'UUMh8TNq5A8mz9K',
-        'HOST': 'mattburlage.mysql.pythonanywhere-services.com',
+        'NAME': 'mattsmithburlage$nertzboard',
+        'USER': 'mattsmithburlage',
+        'PASSWORD': 'B8GXEqXS2AY8auE',
+        'HOST': 'mattsmithburlage.mysql.pythonanywhere-services.com',
     }
 }
 
@@ -159,7 +160,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'https://localhost:3000',
-    'https://nertzboard.mattburlage.com/',
+    'https://nertzboard.mattburlage.com',
 )
 
 JWT_AUTH = {
