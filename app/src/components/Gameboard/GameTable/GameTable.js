@@ -49,11 +49,11 @@ class GameTable extends Component {
                 <Row className='mt-3'>
                     <Col className={'d-none d-md-block'}/>
                     <Col xs={12} md={6}>
-                        <div className={'mb-3 small'}>
-                            <Link to={'#'} onClick={this.props.toggleAutoRefresh}>
-                                Turn {this.props.autoRefresh ? 'Off' : 'On'} Auto-Refresh
-                            </Link>
-                        </div>
+                        {/*<div className={'mb-3 small'}>*/}
+                        {/*    <Link to={'#'} onClick={this.props.toggleAutoRefresh}>*/}
+                        {/*        Turn {this.props.autoRefresh ? 'Off' : 'On'} Auto-Refresh*/}
+                        {/*    </Link>*/}
+                        {/*</div>*/}
                         <Table className={(this.props.darkMode ? 'table-dark' : '' ) + ' table-striped'}>
                             <thead>
                             <tr>
