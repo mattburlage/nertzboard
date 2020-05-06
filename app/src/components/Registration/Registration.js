@@ -40,9 +40,9 @@ class Registration extends Component {
 
     show_registration (e, data) {
         e.preventDefault();
-        console.log('e', e);
-        console.log('data', data);
-        console.log('data string', JSON.stringify(data));
+        // console.log('e', e);
+        // console.log('data', data);
+        // console.log('data string', JSON.stringify(data));
     }
 
     render() {
@@ -52,7 +52,6 @@ class Registration extends Component {
             <div className="app flex-row align-items-center">
                 <Container>
                     <Form onSubmit={e => this.props.handleSignup(e, this.state)}>
-                    {/*<Form onSubmit={e => this.show_registration(e, this.state)}>*/}
                         <Row className="justify-content-center mt-5">
                             <Col md="4">
                                 <h1>Register</h1>
