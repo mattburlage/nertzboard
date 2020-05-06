@@ -117,7 +117,7 @@ class App extends React.Component {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
+                // console.log(json)
                 // localStorage.setItem('token', json.token);
                 // this.setState({
                 //     has_key: !!localStorage.getItem('token'),
