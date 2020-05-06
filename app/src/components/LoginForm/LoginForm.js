@@ -64,7 +64,7 @@ class LoginForm extends Component {
             )
         }
 
-        console.log('login page');
+        // console.log('login page');
         return (
             <div className="app flex-row align-items-center">
                 <Container>

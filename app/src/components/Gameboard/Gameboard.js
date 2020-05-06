@@ -28,7 +28,7 @@ class Gameboard extends Component {
     }
 
     updateScores() {
-        console.log('Update Scores');
+        // console.log('Update Scores');
         fetch(apiUrl + '/nertz/current_game_data/', {
             headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`

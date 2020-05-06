@@ -47,7 +47,7 @@ class Registration extends Component {
 
     render() {
 
-        console.log('registration page');
+        // console.log('registration page');
         return (
             <div className="app flex-row align-items-center">
                 <Container>

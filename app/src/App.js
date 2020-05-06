@@ -107,7 +107,7 @@ class App extends React.Component {
 
     handle_signup = (e, data) => {
         e.preventDefault();
-        console.log(apiUrl);
+        // console.log(apiUrl);
         fetch(apiUrl + '/nertz/users/', {
             method: 'POST',
             headers: {
