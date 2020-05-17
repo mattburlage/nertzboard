@@ -2,6 +2,9 @@ from nertzboard.settings import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SECRET_KEY = "iuhfuhorhfoishfoiashaoih"
+
+
 ALLOWED_HOSTS = [
     'mattburlage.pythonanywhere.com',
     'localhost',

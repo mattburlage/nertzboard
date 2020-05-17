@@ -18,15 +18,17 @@ class Gameboard extends Component {
             autoRefresh: false,
         };
         this.updateScores = this.updateScores.bind(this);
-        this.toggleAutoRefresh = this.toggleAutoRefresh.bind(this);
+        // this.toggleAutoRefresh = this.toggleAutoRefresh.bind(this);
+        this.setAutoRefresh = this.setAutoRefresh.bind(this);
     }
 
     componentDidMount() {
         this.updateScores()
+        this.setAutoRefresh()
     }
 
     updateScores() {
-        console.log('Update Scores');
+        // console.log('Update Scores');
         fetch(apiUrl + '/nertz/current_game_data/', {
             headers: {
                 Authorization: `JWT ${localStorage.getItem('token')}`
@@ -42,20 +44,25 @@ class Gameboard extends Component {
             });
     }
 
-    toggleAutoRefresh () {
-        console.log('toggleAutoRefresh', this.state.autoRefresh);
-        if (this.state.autoRefresh) {
-            this.setState({
-                autoRefresh: false,
-            });
-            clearInterval(myTimer)
-        } else {
-            this.setState({
-                autoRefresh: true,
-            });
-            myTimer = setInterval(this.updateScores, 5000)
-        }
+    setAutoRefresh () {
+        myTimer = setInterval(this.updateScores, 5000)
+
     }
+
+    // toggleAutoRefresh () {
+    //     console.log('toggleAutoRefresh', this.state.autoRefresh);
+    //     if (this.state.autoRefresh) {
+    //         this.setState({
+    //             autoRefresh: false,
+    //         });
+    //         clearInterval(myTimer)
+    //     } else {
+    //         this.setState({
+    //             autoRefresh: true,
+    //         });
+    //         this.setAutoRefresh()
+    //     }
+    // }
 
     render() {
         if (!this.state.isLoaded && false) {
